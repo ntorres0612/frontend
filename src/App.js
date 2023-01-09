@@ -1,24 +1,42 @@
-import logo from './logo.svg';
+// import Header from './components/Views/Header';
+import Dashboard from './components/Dashboard/Dashboard';
+import Login from './components/Login/Login';
 import './App.css';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-function App() {
+// import alert from './assets/sounds/alert.mp3'
+
+// import useSound from 'use-sound';
+// import PrivateRoute from './components/Utils/PrivateRoute';
+// import PublicRoute from './components/Utils/PublicRoute';
+
+import { Fragment } from 'react';
+import {
+  BrowserRouter as Router
+} from "react-router-dom";
+import { red } from '@mui/material/colors';
+
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: red[500],
+    },
+  },
+});
+
+const App = _ => {
+  // const [play, {stop}] = useSound(alert);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Router>
+        {
+          localStorage.getItem('token') === null
+            ? <Login />
+            : <Dashboard />
+        }
+      </Router>
+    </ThemeProvider>
   );
 }
 
